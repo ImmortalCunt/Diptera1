@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganiger Diptera Lab | UAS Bangalore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-teal': '#004d40',
+                        'light-mint': '#b2dfdb',
+                        'charcoal': '#212121',
+                        'amber': '#ffc107',
+                    },
+                    fontFamily: {
+                        body: ['Merriweather', 'serif'],
+                        heading: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .animate-delay-100 {
+            animation-delay: 0.1s;
+        }
+        
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+        
+        .animate-delay-300 {
+            animation-delay: 0.3s;
+        }
+        
+        /* Custom styles for elements */
+        .custom-btn {
+            background: #ffc107;
+            color: #212121;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .custom-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .page-section {
+            padding: 80px 0;
+        }
+        
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 40px;
+        }
+        
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #ffc107;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #ffc107;
+            bottom: -2px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .masonry-grid {
+            column-count: 3;
+            column-gap: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #004d40;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-white font-body text-base text-charcoal leading-relaxed">
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <nav class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-charcoal text-xl font-bold heading">Ganiger Diptera Lab</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="#home" class="nav-link font-medium text-charcoal hover:text-amber">Home</a>
+                        <a href="#about" class="nav-link font-medium text-charcoal hover:text-amber">About</a>
+                        <a href="#research" class="nav-link font-medium text-charcoal hover:text-amber">Research</a>
+                        <a href="#collections" class="nav-link font-medium text-charcoal hover:text-amber">Collections</a>
+                        <a href="#publications" class="nav-link font-medium text-charcoal hover:text-amber">Publications</a>
+                        <a href="#students" class="nav-link font-medium text-charcoal hover:text-amber">Students</a>
+                    </div>
+                </div>
+                
+                <!-- Right section -->
+                <div class="hidden md:flex items-center">
+                    <a href="#contact" class="nav-link font-medium text-charcoal hover:text-amber mr-6">Contact</a>
+                    <a href="#support" class="custom-btn">Donate</a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="menuBtn" class="text-charcoal focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white py-4 px-4 shadow-lg">
+            <div class="space-y-2">
+                <a href="#home" class="block py-2 font-medium hover:text-amber">Home</a>
+                <a href="#about" class="block py-2 font-medium hover:text-amber">About</a>
+                <a href="#research" class="block py-2 font-medium hover:text-amber">Research</a>
+                <a href="#collections" class="block py-2 font-medium hover:text-amber">Collections</a>
+                <a href="#publications" class="block py-2 font-medium hover:text-amber">Publications</a>
+                <a href="#students" class="block py-2 font-medium hover:text-amber">Students</a>
+                <a href="#contact" class="block py-2 font-medium hover:text-amber">Contact</a>
+                <a href="#support" class="mt-3 custom-btn block text-center">Donate</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Hero -->
+        <section id="home" class="relative h-screen flex items-center">
+            <!-- Hero background -->
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579165247967-cc3b39caf44d?q=80&w=2000');">
+                <div class="absolute inset-0 bg-charcoal opacity-70"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 z-10 relative text-center w-full">
+                <div class="max-w-3xl mx-auto text-white fade-in">
+                    <h1 class="text-5xl md:text-6xl font-bold heading mb-6">Diptera Research by Dr. Prabhu C. Ganiger</h1>
+                    <p class="text-2xl font-semibold mb-10 leading-tight text-amber">Integrative Taxonomy • Ecology • Community</p>
+                    <a href="#research" class="custom-btn inline-block mt-4">Learn More</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Quick-Facts Bar -->
+        <div class="bg-light-mint py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="bg-white rounded-lg p-6 shadow-sm fade-in animate-delay-100">
+                        <i class="fas fa-vial text-amber text-3xl mb-3"></i>
+                        <p class="text-xl font-bold heading">3.2M</p>
+                        <p class="text-gray-600">Specimens examined</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm fade-in animate-delay-200">
+                        <i class="fas fa-calendar-alt text-amber text-3xl mb-3"></i>
+                        <p class="text-xl font-bold heading">25+ years</p>
+                        <p class="text-gray-600">In entomology</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm fade-in animate-delay-300">
+                        <i class="fas fa-globe-asia text-amber text-3xl mb-3"></i>
+                        <p class="text-xl font-bold heading">Global</p>
+                        <p class="text-gray-600">Field sites</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm fade-in animate-delay-400">
+                        <i class="fas fa-bug text-amber text-3xl mb-3"></i>
+                        <p class="text-xl font-bold heading">50+</p>
+                        <p class="text-gray-600">Species studied</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Featured Blocks -->
+        <section class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <h2 class="text-3xl heading font-bold text-center mb-12">Latest From Our Lab</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Latest News -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1439920120577-eb3a83c16dd7?q=80&w=1774')"></div>
+                        <div class="p-6">
+                            <div class="text-amber font-semibold mb-2 heading">July 15, 2023</div>
+                            <h3 class="text-xl heading font-bold mb-3">Presentations at ICEC 2023</h3>
+                            <p class="mb-4">Dr. Ganiger presented our latest findings on dipteran ecology at the international conference in Berlin.</p>
+                            <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                Read more
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Featured Publication -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in animate-delay-100">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1468071174046-657d9d351a40?q=80&w=1770')"></div>
+                        <div class="p-6">
+                            <div class="text-amber font-semibold mb-2 heading">June 23, 2023</div>
+                            <h3 class="text-xl heading font-bold mb-3">New Species Discovered</h3>
+                            <p class="mb-4">Our team's paper describing two new dipteran species has been published in Insect Systematics.</p>
+                            <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                View PDF
+                                <i class="fas fa-file-pdf ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Student Spotlight -->
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in animate-delay-200">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1621340029441-d3a8b7a7cd8a?q=80&w=1770')"></div>
+                        <div class="p-6">
+                            <div class="text-amber font-semibold mb-2 heading">Student Spotlight</div>
+                            <h3 class="text-xl heading font-bold mb-3">Ananya Sharma</h3>
+                            <p class="mb-4">Ph.D. candidate awarded the National Science Fellowship for her work on tropical diptera communities.</p>
+                            <a href="#students" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                Learn more
+                                <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="page-section bg-light-mint">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <!-- Banner -->
+                <div class="relative h-96 mb-16 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1598033122487-9b5da70e34c1?q=80&w=1770')">
+                        <div class="absolute inset-0 bg-charcoal opacity-70"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h1 class="text-5xl font-bold heading text-white">About Dr. Ganiger</h1>
+                    </div>
+                </div>
+                
+                <!-- Quick Facts -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <div class="bg-white rounded-lg p-6 shadow-sm text-center fade-in">
+                        <i class="fas fa-graduation-cap text-amber text-3xl mb-3"></i>
+                        <p class="font-bold heading">M.Sc. (Agri), Ph.D. – Entomology</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm text-center fade-in animate-delay-100">
+                        <i class="fas fa-university text-amber text-3xl mb-3"></i>
+                        <p class="font-bold heading">Professor, UAS Bangalore since 2009</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm text-center fade-in animate-delay-200">
+                        <i class="fas fa-user-tie text-amber text-3xl mb-3"></i>
+                        <p class="font-bold heading">AICRP Diptera Head since 2016</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 shadow-sm text-center fade-in animate-delay-300">
+                        <i class="fas fa-id-card text-amber text-3xl mb-3"></i>
+                        <p class="font-bold heading">prabhuganiger@gmail.com<br>+91-94811-01330</p>
+                    </div>
+                </div>
+                
+                <!-- Career & Education -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="order-2 md:order-1 fade-in">
+                        <h3 class="section-heading text-3xl heading font-bold">Career & Education</h3>
+                        <p class="mt-6">Dr. Prabhu C. Ganiger is a senior entomologist specializing in Diptera taxonomy and ecology. Over his 25-year career, he has led field surveys, curated museum collections, and published extensively on fruit flies, leaf miners, and nuisance Diptera.</p>
+                        <p class="mt-4">His research focuses on integrative approaches combining morphological, molecular, and ecological data to understand dipteran biodiversity, particularly in vulnerable ecosystems.</p>
+                    </div>
+                    <div class="order-1 md:order-2 rounded-xl overflow-hidden shadow-lg fade-in animate-delay-100">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5aa?q=80&w=1677" alt="Dr. Prabhu C. Ganiger" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <!-- Mission Statement -->
+                <div class="bg-amber p-8 rounded-xl mb-16 fade-in">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <i class="fas fa-quote-left text-charcoal text-3xl mb-4"></i>
+                        <p class="text-2xl italic font-semibold">"To build a global Diptera research community—sharing taxonomy, data, and discoveries."</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline -->
+                <div class="max-w-4xl mx-auto fade-in">
+                    <h3 class="section-heading text-3xl heading font-bold mb-8">Research Timeline</h3>
+                    
+                    <div class="border-l-2 border-charcoal pl-8 py-4 space-y-10 relative">
+                        <!-- Timeline item -->
+                        <div class="relative">
+                            <div class="absolute -left-11 w-8 h-8 rounded-full bg-amber flex items-center justify-center">
+                                <i class="fas fa-graduation-cap text-charcoal"></i>
+                            </div>
+                            <h4 class="heading text-xl font-bold">2000 – Ph.D. in Entomology</h4>
+                            <p class="mt-2">Completed doctoral research on Tephritidae systematics</p>
+                        </div>
+                        
+                        <!-- Timeline item -->
+                        <div class="relative">
+                            <div class="absolute -left-11 w-8 h-8 rounded-full bg-amber flex items-center justify-center">
+                                <i class="fas fa-university text-charcoal"></i>
+                            </div>
+                            <h4 class="heading text-xl font-bold">2009 – Joined UAS Bangalore</h4>
+                            <p class="mt-2">Began teaching and research at University of Agricultural Sciences</p>
+                        </div>
+                        
+                        <!-- Timeline item -->
+                        <div class="relative">
+                            <div class="absolute -left-11 w-8 h-8 rounded-full bg-amber flex items-center justify-center">
+                                <i class="fas fa-users text-charcoal"></i>
+                            </div>
+                            <h4 class="heading text-xl font-bold">2016 – Appointed AICRP Diptera Head</h4>
+                            <p class="mt-2">Assumed leadership of All India Coordinated Research Project on Diptera</p>
+                        </div>
+                        
+                        <!-- Timeline item -->
+                        <div class="relative">
+                            <div class="absolute -left-11 w-8 h-8 rounded-full bg-amber flex items-center justify-center">
+                                <i class="fas fa-flask text-charcoal"></i>
+                            </div>
+                            <h4 class="heading text-xl font-bold">2024 – Launched Diptera Lab initiative</h4>
+                            <p class="mt-2">Established state-of-the-art research facility at UAS Bangalore</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Research Section -->
+        <section id="research" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <!-- Header -->
+                <div class="relative h-96 mb-16 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542372490-c4474c56f06a?q=80&w=1770')">
+                        <div class="absolute inset-0 bg-deep-teal opacity-80"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h1 class="text-5xl font-bold heading text-white">Research</h1>
+                    </div>
+                </div>
+                
+                <!-- Research Areas -->
+                <h2 class="section-heading text-3xl heading font-bold mb-12">Research Areas</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                    <!-- Systematics -->
+                    <div class="bg-light-mint rounded-lg p-8 text-center card-hover fade-in">
+                        <i class="fas fa-microscope text-charcoal text-4xl mb-6"></i>
+                        <h3 class="text-xl heading font-bold mb-4">Systematics</h3>
+                        <p>Morphological and molecular approaches to Diptera taxonomy, classification, and phylogenetics</p>
+                    </div>
+                    
+                    <!-- Ecology -->
+                    <div class="bg-light-mint rounded-lg p-8 text-center card-hover fade-in animate-delay-100">
+                        <i class="fas fa-leaf text-charcoal text-4xl mb-6"></i>
+                        <h3 class="text-xl heading font-bold mb-4">Ecology & Distribution</h3>
+                        <p>Species-environment interactions and biogeographical patterns of dipteran communities</p>
+                    </div>
+                    
+                    <!-- Phylogeography -->
+                    <div class="bg-light-mint rounded-lg p-8 text-center card-hover fade-in animate-delay-200">
+                        <i class="fas fa-map-marked-alt text-charcoal text-4xl mb-6"></i>
+                        <h3 class="text-xl heading font-bold mb-4">Phylogeography</h3>
+                        <p>Studying the historical processes responsible for current geographical distributions</p>
+                    </div>
+                    
+                    <!-- Pest Management -->
+                    <div class="bg-light-mint rounded-lg p-8 text-center card-hover fade-in animate-delay-300">
+                        <i class="fas fa-shield-alt text-charcoal text-4xl mb-6"></i>
+                        <h3 class="text-xl heading font-bold mb-4">Pest Management</h3>
+                        <p>Developing sustainable control methods for agriculturally important dipteran pests</p>
+                    </div>
+                </div>
+                
+                <!-- Featured Project -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg flex flex-col md:flex-row fade-in">
+                    <div class="md:w-1/3 bg-cover bg-center min-h-[300px]" style="background-image: url('https://images.unsplash.com/photo-1471922694854-ff1b4b0c824d?q=80&w=1772')"></div>
+                    <div class="md:w-2/3 p-8">
+                        <h3 class="text-2xl heading font-bold mb-4">Global Survey of Bactrocera</h3>
+                        <p class="mb-4">This comprehensive study is documenting the diversity, distribution, and host associations of Bactrocera fruit flies across tropical Asia and the Pacific.</p>
+                        <p>Field expeditions have collected specimens at over 120 sites in 8 countries, revealing patterns of species radiation and ecological adaptation.</p>
+                        <a href="#" class="custom-btn inline-block mt-6">Read full project</a>
+                    </div>
+                </div>
+                
+                <!-- Tools & Methods -->
+                <div class="mt-16 fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-12">Tools & Methods</h2>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-light-mint rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-microscope text-charcoal text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">Morphology</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-light-mint rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-dna text-charcoal text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">Molecular</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-light-mint rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-bug text-charcoal text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">Field Sampling</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-20 h-20 bg-light-mint rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-camera text-charcoal text-2xl"></i>
+                            </div>
+                            <p class="font-semibold">Imaging</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Collections Section -->
+        <section id="collections" class="page-section bg-light-mint">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <div class="relative h-96 mb-16 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1581002411663-9e0c7d8a15a8?q=80&w=1770')">
+                        <div class="absolute inset-0 bg-deep-teal opacity-80"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h1 class="text-5xl font-bold heading text-white">Collections & Diptera</h1>
+                    </div>
+                </div>
+                
+                <!-- Introduction -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h2 class="section-heading text-3xl heading font-bold mb-6">Our Collections</h2>
+                        <p class="mb-4">The Ganiger Lab maintains one of South Asia's most comprehensive Diptera collections, with over 250,000 curated specimens representing 75 families and more than 3,500 species.</p>
+                        <p>Following the Smithsonian model, our collection preserves biodiversity data and serves as a vital resource for taxonomic research and ecosystem monitoring.</p>
+                    </div>
+                    <div class="rounded-xl overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1548141877-3e0744a4e46b?q=80&w=1770" alt="Specimen drawer" class="w-full h-auto">
+                    </div>
+                </div>
+                
+                <!-- Diptera Stats -->
+                <h2 class="section-heading text-3xl heading font-bold mb-12">Diptera Quick Stats</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+                    <div class="bg-white p-6 rounded-lg shadow-sm flex items-center fade-in">
+                        <div class="w-14 h-14 bg-amber rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-bug text-charcoal text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold heading">~1M described species</p>
+                            <p>Global diversity</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm flex items-center fade-in animate-delay-100">
+                        <div class="w-14 h-14 bg-amber rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-list-ol text-charcoal text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold heading">2nd largest</p>
+                            <p>Insect order</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm flex items-center fade-in animate-delay-200">
+                        <div class="w-14 h-14 bg-amber rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-layer-group text-charcoal text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-xl font-bold heading">56K+ species</p>
+                            <p>USNM Diptera collection</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Featured Species -->
+                <div class="mb-16">
+                    <h2 class="section-heading text-3xl heading font-bold mb-12">Featured Species</h2>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in">
+                            <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1770')"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl heading font-bold mb-3">Bactrocera dorsalis</h3>
+                                <p class="text-gray-600 mb-4">Oriental Fruit Fly</p>
+                                <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                    View profile
+                                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in animate-delay-100">
+                            <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1537420327992-d6e192287183?q=80&w=1856')"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl heading font-bold mb-3">Drosophila melanogaster</h3>
+                                <p class="text-gray-600 mb-4">Common Fruit Fly</p>
+                                <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                    View profile
+                                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in animate-delay-200">
+                            <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1614294148963-13bda3b40f27?q=80&w=1770')"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl heading font-bold mb-3">Anopheles stephensi</h3>
+                                <p class="text-gray-600 mb-4">Malaria Mosquito</p>
+                                <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                    View profile
+                                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md card-hover fade-in animate-delay-300">
+                            <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1517430708b1e2fc3e1cc65aa4d1cd20?q=80&w=1770')"></div>
+                            <div class="p-6">
+                                <h3 class="text-xl heading font-bold mb-3">Musca domestica</h3>
+                                <p class="text-gray-600 mb-4">House Fly</p>
+                                <a href="#" class="font-medium text-amber hover:text-deep-teal flex items-center">
+                                    View profile
+                                    <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Publications & Resources Section -->
+        <section id="publications" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <h1 class="text-5xl heading font-bold mb-16 text-center">Publications & Resources</h1>
+                
+                <!-- Publications List -->
+                <div class="max-w-4xl mx-auto mb-16 fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-8">Recent Publications</h2>
+                    
+                    <ul class="space-y-6">
+                        <li class="border-l-4 border-amber pl-4 py-2">
+                            <p class="mb-2">Ganiger & Rao (2024). Revision of Indian Tephritidae. Insect Systematics 29(2):101–120.</p>
+                            <a href="#" class="text-amber font-semibold flex items-center">
+                                Download PDF
+                                <i class="fas fa-file-pdf ml-2 text-sm"></i>
+                            </a>
+                        </li>
+                        <li class="border-l-4 border-amber pl-4 py-2">
+                            <p class="mb-2">Ganiger, Sharma & Kumar (2023). Ecological niches of fruit flies in the Western Ghats. Entomological Review 112(4): 245–260.</p>
+                            <a href="#" class="text-amber font-semibold flex items-center">
+                                Download PDF
+                                <i class="fas fa-file-pdf ml-2 text-sm"></i>
+                            </a>
+                        </li>
+                        <li class="border-l-4 border-amber pl-4 py-2">
+                            <p class="mb-2">Ganiger et al. (2023). Molecular phylogeny of Asian Drosophilidae. Molecular Phylogenetics and Evolution 168: 107378.</p>
+                            <a href="#" class="text-amber font-semibold flex items-center">
+                                Download PDF
+                                <i class="fas fa-file-pdf ml-2 text-sm"></i>
+                            </a>
+                        </li>
+                        <li class="border-l-4 border-amber pl-4 py-2">
+                            <p class="mb-2">Patel & Ganiger (2022). Sustainable control methods for Muscidae in livestock operations. Journal of Applied Entomology 144(5): 415–430.</p>
+                            <a href="#" class="text-amber font-semibold flex items-center">
+                                Download PDF
+                                <i class="fas fa-file-pdf ml-2 text-sm"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <a href="#" class="custom-btn inline-block mt-6">View all publications</a>
+                </div>
+                
+                <!-- Resources Grid -->
+                <div class="fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-8">Research Resources</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-light-mint rounded-lg p-8 flex flex-col fade-in">
+                            <i class="fas fa-database text-charcoal text-3xl mb-4"></i>
+                            <h3 class="text-xl heading font-bold mb-4">Diptera Databases</h3>
+                            <p class="mb-6">Access to comprehensive diptera taxonomy resources including Systema Dipterorum and other curated databases</p>
+                            <a href="#" class="custom-btn mt-auto">Explore</a>
+                        </div>
+                        
+                        <div class="bg-light-mint rounded-lg p-8 flex flex-col fade-in animate-delay-100">
+                            <i class="fas fa-key text-charcoal text-3xl mb-4"></i>
+                            <h3 class="text-xl heading font-bold mb-4">Morphological Keys</h3>
+                            <p class="mb-6">Identification keys for regional diptera families with detailed illustrations and diagnostic characters</p>
+                            <a href="#" class="custom-btn mt-auto">Download</a>
+                        </div>
+                        
+                        <div class="bg-light-mint rounded-lg p-8 flex flex-col fade-in animate-delay-200">
+                            <i class="fas fa-dna text-charcoal text-3xl mb-4"></i>
+                            <h3 class="text-xl heading font-bold mb-4">Genomic Data</h3>
+                            <p class="mb-6">Access to sequencing datasets and genomic resources for comparative genomics studies</p>
+                            <a href="#" class="custom-btn mt-auto">Access GenBank</a>
+                        </div>
+                        
+                        <div class="bg-light-mint rounded-lg p-8 flex flex-col fade-in animate-delay-300">
+                            <i class="fas fa-book-open text-charcoal text-3xl mb-4"></i>
+                            <h3 class="text-xl heading font-bold mb-4">Educational Materials</h3>
+                            <p class="mb-6">Download our outreach materials including field guides, posters, and teaching resources</p>
+                            <a href="#" class="custom-btn mt-auto">View Resources</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Students & Projects Section -->
+        <section id="students" class="page-section bg-light-mint">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <h1 class="text-5xl heading font-bold mb-16 text-center">Students & Projects</h1>
+                
+                <!-- Team Grid -->
+                <div class="mb-16 fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-12">Current Lab Members</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white rounded-lg p-6 text-center shadow-md fade-in">
+                            <div class="w-32 h-32 rounded-full bg-gray-200 border-4 border-amber mx-auto mb-6 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1543610892-0b1f7e6d5ac8?q=80&w=1778')"></div>
+                            <h3 class="text-xl heading font-bold">Ananya Sharma</h3>
+                            <p class="text-amber mb-3">Ph.D. Candidate</p>
+                            <p class="mb-4">Tephritidae phylogenomics in South Asia</p>
+                            <a href="#" class="text-amber font-semibold">View Profile</a>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-6 text-center shadow-md fade-in animate-delay-100">
+                            <div class="w-32 h-32 rounded-full bg-gray-200 border-4 border-amber mx-auto mb-6 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1502823403499-6ccfcf4c4533?q=80&w=1887')"></div>
+                            <h3 class="text-xl heading font-bold">Raj Patel</h3>
+                            <p class="text-amber mb-3">Postdoctoral Fellow</p>
+                            <p class="mb-4">Ecological modeling of pest fly distributions</p>
+                            <a href="#" class="text-amber font-semibold">View Profile</a>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-6 text-center shadow-md fade-in animate-delay-200">
+                            <div class="w-32 h-32 rounded-full bg-gray-200 border-4 border-amber mx-auto mb-6 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1567532939604-b6b5b0e1609d?q=80&w=1887')"></div>
+                            <h3 class="text-xl heading font-bold">Priya Kumar</h3>
+                            <p class="text-amber mb-3">Research Associate</p>
+                            <p class="mb-4">Morphological analysis of Syrphidae</p>
+                            <a href="#" class="text-amber font-semibold">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Highlights -->
+                <div class="mb-16 fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-12">Project Highlights</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="bg-white rounded-xl overflow-hidden flex flex-col md:flex-row shadow-lg">
+                            <div class="md:w-1/3 bg-cover bg-center min-h-[250px]" style="background-image: url('https://images.unsplash.com/photo-1560568081-8c9e49c0dc5d?q=80&w=1770')"></div>
+                            <div class="md:w-2/3 p-8">
+                                <h3 class="text-2xl heading font-bold mb-4">Diptera of the Western Ghats</h3>
+                                <p class="mb-4">Documenting fly diversity in this biodiversity hotspot through intensive field surveys and molecular characterization of endemic species.</p>
+                                <a href="#" class="custom-btn inline-block">Learn More</a>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl overflow-hidden flex flex-col md:flex-row shadow-lg">
+                            <div class="md:w-1/3 bg-cover bg-center min-h-[250px]" style="background-image: url('https://images.unsplash.com/photo-1587840177051-4e20d807ed43?q=80&w=1770')"></div>
+                            <div class="md:w-2/3 p-8">
+                                <h3 class="text-2xl heading font-bold mb-4">Digital Diptera Atlas</h3>
+                                <p class="mb-4">Creating an interactive digital platform with comprehensive data on Indian fly species, including distribution maps and high-resolution imagery.</p>
+                                <a href="#" class="custom-btn inline-block">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Join Us Callout -->
+                <div class="bg-amber p-8 rounded-xl mb-16 fade-in">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h3 class="text-3xl heading font-bold mb-4">Want to join the Diptera Lab?</h3>
+                        <p class="text-xl mb-6">We're always looking for motivated graduate students and postdocs to join our research team!</p>
+                        <a href="#contact" class="custom-btn bg-charcoal text-white hover:bg-black">Contact Us</a>
+                    </div>
+                </div>
+                
+                <!-- Alumni Strip -->
+                <div class="fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-8">Where Our Alumni Are Now</h2>
+                    
+                    <div class="bg-charcoal rounded-xl py-6 px-6">
+                        <div class="text-white text-center italic">
+                            "Dr. Meera Singh (Postdoc 2019-2021) - Assistant Professor at Udaipur University"
+                            &nbsp; • &nbsp;
+                            "Dr. Akash Gupta (Ph.D. 2018) - Research Scientist at ICAR"
+                            &nbsp; • &nbsp;
+                            "Dr. Sunita Verma (Ph.D. 2016) - Curator at National Museum of Natural History"
+                            &nbsp; • &nbsp;
+                            "Dr. Sanjay Kumar (MSc 2015) - Forest Entomologist, Karnataka Forest Department"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="page-section">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <!-- Hero -->
+                <div class="relative h-96 mb-16 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1770')">
+                        <div class="absolute inset-0 bg-deep-teal opacity-80"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h1 class="text-5xl font-bold heading text-white">Get in Touch</h1>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div class="fade-in">
+                        <h2 class="section-heading text-3xl heading font-bold mb-8">Send a Message</h2>
+                        
+                        <form class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-amber focus:border-amber">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-amber focus:border-amber">
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+                                <input type="text" id="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-amber focus:border-amber">
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-sm font-medium mb-2">Message</label>
+                                <textarea id="message" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-amber focus:border-amber"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="custom-btn">Send Message</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Direct Info -->
+                    <div class="fade-in animate-delay-100">
+                        <h2 class="section-heading text-3xl heading font-bold mb-8">Direct Contact</h2>
+                        
+                        <div class="space-y-6 mb-10">
+                            <div>
+                                <i class="fas fa-user-circle text-amber text-xl mr-3"></i>
+                                <span class="font-bold">Dr. Prabhu C. Ganiger</span>
+                            </div>
+                            
+                            <div>
+                                <i class="fas fa-envelope text-amber text-xl mr-3"></i>
+                                <span>prabhuganiger@gmail.com</span>
+                            </div>
+                            
+                            <div>
+                                <i class="fas fa-phone text-amber text-xl mr-3"></i>
+                                <span>+91-94811-01330</span>
+                            </div>
+                            
+                            <div>
+                                <i class="fas fa-map-marker-alt text-amber text-xl mr-3"></i>
+                                <span>Department of Entomology<br>University of Agricultural Sciences<br>GKVK Campus, Bengaluru 560 065, India</span>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <p class="font-semibold mb-3 text-xl">Collaboration Requests:</p>
+                                <p>For research collaborations, please email at least one day prior to meeting requests.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="h-64 bg-cover bg-center rounded-xl shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1582568357279-6d89cbdadf1c?q=80&w=1770')"></div>
+                        
+                        <div class="mt-8 flex space-x-4">
+                            <a href="#" class="w-12 h-12 rounded-full bg-charcoal flex items-center justify-center hover:bg-amber transition-colors">
+                                <i class="fab fa-researchgate text-white"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-full bg-charcoal flex items-center justify-center hover:bg-amber transition-colors">
+                                <i class="fab fa-orcid text-white"></i>
+                            </a>
+                            <a href="#" class="w-12 h-12 rounded-full bg-charcoal flex items-center justify-center hover:bg-amber transition-colors">
+                                <i class="fab fa-twitter text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Support Us Section -->
+        <section id="support" class="page-section bg-deep-teal">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6">
+                <!-- Banner -->
+                <div class="relative h-96 mb-16 rounded-xl overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579546929662-711aa81148cf?q=80&w=1770')">
+                        <div class="absolute inset-0 bg-charcoal opacity-70"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <h1 class="text-5xl font-bold heading text-white text-center">Support Diptera Research</h1>
+                    </div>
+                </div>
+                
+                <!-- Mission & Appeal -->
+                <div class="max-w-4xl mx-auto text-white mb-16 fade-in">
+                    <h2 class="section-heading text-3xl heading font-bold mb-8">Why Your Support Matters</h2>
+                    
+                    <p class="mb-6">Diptera research is fundamental to understanding ecosystem health, agricultural productivity, and disease vector control. Despite their ecological importance, dipterans remain understudied in many regions of the world.</p>
+                    <p class="mb-6">Your donations help fund critical research components including field expeditions to biodiversity hotspots, molecular analysis tools, and student scholarships that train the next generation of entomologists.</p>
+                    <p>With your support, we can expand our research on fly systematics, ecology, and management to address pressing environmental challenges.</p>
+                </div>
+                
+                <!-- Donation Button -->
+                <div class="text-center mb-16 fade-in">
+                    <a href="#" class="custom-btn bg-amber text-charcoal hover:bg-amber-600 inline-block text-lg py-4 px-10">
+                        Donate Now
+                        <i class="fas fa-heart ml-3"></i>
+                    </a>
+                </div>
+                
+                <!-- Funder Logos -->
+                <div class="mb-16 fade-in">
+                    <h2 class="text-3xl heading font-bold mb-8 text-center text-white">Our Supporters</h2>
+                    
+                    <div class="flex flex-wrap items-center justify-center gap-10">
+                        <div class="bg-white rounded-lg p-6 w-40 h-32 flex items-center justify-center">
+                            <span class="font-bold text-deep-teal">UAS Bangalore</span>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 w-40 h-32 flex items-center justify-center">
+                            <span class="font-bold text-deep-teal">ICAR</span>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 w-40 h-32 flex items-center justify-center">
+                            <span class="font-bold text-deep-teal">DST SERB</span>
+                        </div>
+                        <div class="bg-white rounded-lg p-6 w-40 h-32 flex items-center justify-center">
+                            <span class="font-bold text-deep-teal">AICRP</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ -->
+                <div class="fade-in">
+                    <h2 class="text-3xl heading font-bold mb-8 text-center text-white">Frequently Asked Questions</h2>
+                    
+                    <div class="max-w-3xl mx-auto space-y-6">
+                        <details class="bg-white rounded-xl overflow-hidden">
+                            <summary class="p-6 font-bold heading text-lg cursor-pointer">Where does my gift go?</summary>
+                            <div class="p-6 pt-0">
+                                <p>85% of donations directly fund research activities including field work, laboratory supplies, and student support. The remaining 15% supports public outreach programs and open-access publication fees.</p>
+                            </div>
+                        </details>
+                        
+                        <details class="bg-white rounded-xl overflow-hidden">
+                            <summary class="p-6 font-bold heading text-lg cursor-pointer">How can I request funding?</summary>
+                            <div class="p-6 pt-0">
+                                <p>Graduate students can apply for our annual research grants each January. Download the application guidelines from our Resources section.</p>
+                            </div>
+                        </details>
+                        
+                        <details class="bg-white rounded-xl overflow-hidden">
+                            <summary class="p-6 font-bold heading text-lg cursor-pointer">Is my donation tax-deductible?</summary>
+                            <div class="p-6 pt-0">
+                                <p>Yes, all donations to the Ganiger Diptera Lab through UAS Bangalore are eligible for tax exemptions under Section 80G of the Indian Income Tax Act.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white pt-16 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <!-- Newsletter -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-2xl heading font-bold mb-4">Stay Updated</h3>
+                    <p class="text-light-mint max-w-lg">Subscribe to receive the latest research findings and lab updates</p>
+                </div>
+                
+                <div class="w-full md:w-1/3">
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-lg text-charcoal focus:outline-none focus:ring-2 focus:ring-amber">
+                        <button type="submit" class="custom-btn bg-amber text-charcoal hover:bg-amber-600">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Footer Columns -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-16">
+                <div>
+                    <h4 class="text-lg heading font-bold mb-4">Ganiger Diptera Lab</h4>
+                    <p class="text-light-mint">University of Agricultural Sciences<br>GKVK Campus<br>Bengaluru 560 065, India</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg heading font-bold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="text-light-mint">Email: prabhuganiger@gmail.com</li>
+                        <li class="text-light-mint">Phone: +91-94811-01330</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg heading font-bold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-amber transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-amber transition-colors">
+                            <i class="fab fa-researchgate"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-amber transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center hover:bg-amber transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg heading font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-light-mint">
+                        <li><a href="#home" class="hover:text-amber transition-colors">Home</a></li>
+                        <li><a href="#about" class="hover:text-amber transition-colors">About</a></li>
+                        <li><a href="#publications" class="hover:text-amber transition-colors">Publications</a></li>
+                        <li><a href="#students" class="hover:text-amber transition-colors">Students</a></li>
+                        <li><a href="#support" class="hover:text-amber transition-colors">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Ganiger Diptera Lab, University of Agricultural Sciences, Bangalore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <div id="backToTop" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!menuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+        
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add animation classes when element is in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
